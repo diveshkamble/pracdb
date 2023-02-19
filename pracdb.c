@@ -28,7 +28,9 @@ void print_prompt()
 
 void read_input(InputBuffer *input_buffer)
 {
-    // getline returns bytes read size if -1 then it means error hence we are using signed size_t (ssize_t)
+    // getline returns number of bytes read ;if -1 then it means error; n is a pointer to save the size of allocated buffer; we are using signed size_t (ssize_t); our File stream is stdin
+    //ssize_t getline(char **lineptr, size_t *n, FILE *stream);
+    // if it returns -1 then free the allocated buffer
     ssize_t bytes_read = getline(&(input_buffer->buffer), &(input_buffer->buffer_length), stdin);
     if (bytes_read <= 0)
     {
