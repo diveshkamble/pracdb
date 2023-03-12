@@ -165,7 +165,7 @@ PrepareResult prepare_statement(InputBuffer *input_buffer, Statement *statement)
     {
         statement->type = STATEMENT_INSERT;
         int args_assigned = sscanf(input_buffer->buffer, "insert %d %s %s", &(statement->row_to_insert.id), &(statement->row_to_insert.username), &(statement->row_to_insert.email));
-        if (args_assigned > 3)
+        if (args_assigned < 3)
         {
             return PREPARE_SYNTAX_ERROR;
         }
@@ -196,7 +196,7 @@ ExecuteResult execute_insert(Statement *statement, Table *table)
 
 ExecuteResult execute_select(Statement *statement, Table *table)
 {
-    Row *row;
+    Row row;
     for (uint32_t i = 1; i < table->num_rows; i++)
     {
         deserialize_row(rows_slot(table, i), &row);
@@ -269,7 +269,6 @@ int main(int argc, char *argv[])
             printf("Unrecognized keyboard at start of '%s'.\n", input_buffer->buffer);
             continue;
         }
-        execute_statement(&statement, table);
         switch (execute_statement(&statement, table))
         {
         case (EXECUTE_SUCCESS):
