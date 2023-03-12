@@ -43,8 +43,8 @@ typedef enum
 typedef struct
 {
     uint32_t id;
-    char username[COLUMN_USERNAME_SIZE];
-    char email[COLUMN_EMAIL_SIZE];
+    char username[COLUMN_USERNAME_SIZE + 1];
+    char email[COLUMN_EMAIL_SIZE + 1];
 } Row;
 typedef struct
 {
@@ -197,7 +197,7 @@ ExecuteResult execute_insert(Statement *statement, Table *table)
 ExecuteResult execute_select(Statement *statement, Table *table)
 {
     Row row;
-    for (uint32_t i = 1; i < table->num_rows; i++)
+    for (uint32_t i = 0; i < table->num_rows; i++)
     {
         deserialize_row(rows_slot(table, i), &row);
         print_row(&row);
@@ -275,7 +275,7 @@ int main(int argc, char *argv[])
             printf("Executed.\n");
             break;
         case (EXECUTE_TABLE_FULL):
-            printf("Error: Table Full.\n");
+            printf("Error: Table full.\n");
             break;
         }
     }
