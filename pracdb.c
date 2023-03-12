@@ -48,7 +48,7 @@ void print_prompt()
 void read_input(InputBuffer *input_buffer)
 {
     // getline returns number of bytes read ;if -1 then it means error; n is a pointer to save the size of allocated buffer; we are using signed size_t (ssize_t); our File stream is stdin
-    //ssize_t getline(char **lineptr, size_t *n, FILE *stream);
+    // ssize_t getline(char **lineptr, size_t *n, FILE *stream);
     // if it returns -1 then free the allocated buffer
     ssize_t bytes_read = getline(&(input_buffer->buffer), &(input_buffer->buffer_length), stdin);
     if (bytes_read <= 0)
@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
                     case (META_COMMAND_SUCCESS):
                     continue;
                     case (META_COMMAND_UNRECOGNIZED_COMMAND):
-                    printf("Unrecognized command '%s'./n",input_buffer->buffer);
+                    printf("Unrecognized command '%s'.\n",input_buffer->buffer);
                     continue;
                 }
             }
